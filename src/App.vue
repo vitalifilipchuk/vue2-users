@@ -34,4 +34,8 @@ export default {
   padding: 0 20px;
   margin: 0 auto;
 }
+
+input.error {
+  border: 1px solid red;
+}
 </style>
