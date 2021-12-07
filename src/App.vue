@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header />
+    <Header :isLoggedIn="isLoggedIn" />
     <router-view/>
   </div>
 </template>
@@ -15,7 +15,17 @@ export default {
   },
   data() {
     return {
-      
+      loggedIn: false
+    }
+  },
+  computed: {
+    isLoggedIn: function() {
+      if (localStorage.getItem("currentLoggedUser")) {
+        return true
+      }
+      else {
+        return false
+      }
     }
   }
 }

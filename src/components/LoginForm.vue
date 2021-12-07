@@ -1,7 +1,7 @@
 <template>
     <form 
     @submit.prevent="submitHandler" 
-    class="form registration-form"
+    class="form login-form"
     >
         <div class="form__row">
             <input 
@@ -21,16 +21,7 @@
             :class="{error: pwdError}"
             />
         </div>
-        <div class="form__row">
-            <input 
-            type="password" 
-            v-model="repeatpwd" 
-            name="repeatpwd"
-            placeholder="Повторіть пароль"
-            :class="{error: repeatpwdError}"
-            />
-        </div>
-        <input type="submit" value="Реєстрація" class="btn btn--block">
+        <input type="submit" value="Увійти" class="btn btn--block">
 
         <div class="form__errors" v-if="errors.length">
             <ul>
@@ -42,13 +33,11 @@
 
 <script>
 export default {
-    name: 'RegistrationForm',
+    name: 'LoginForm',
     data() {
         return {
             loginError: false,
             pwdError: false,
-            repeatpwdError: false,
-            alreadyExistError: false,
             errors: [],
             name: '',
             password: '',
@@ -59,8 +48,6 @@ export default {
         submitHandler() {
             this.loginError = false
             this.pwdError = false
-            this.repeatpwdError = false
-            this.alreadyExistError = false
 
             if (!this.name) {
                 this.errors.push('Потрібно вказати логін!')
@@ -82,35 +69,25 @@ export default {
                 this.pwdError = true
             }
 
-            if (this.password !== this.repeatpwd) {
-                this.errors.push('Впевніться, що правильно ввели повторний пароль')
-                this.repeatpwdError = true
-            }
-
-            if (!(this.loginError || this.pwdError || this.repeatpwdError)) {
+            if (!(this.loginError || this.pwdError)) {
                 let usersData = JSON.parse(localStorage.getItem("users"))
-                if (usersData === null) {
-                    let newUsersArray = new Array()
-                    newUsersArray.push({name: this.name, password: this.password})
-                    localStorage.setItem('users',JSON.stringify(newUsersArray))
-                    localStorage.setItem('currentLoggedUser', this.name)
-                    this.$router.push({ name: 'Account' })
-                }
-                else {
-                    let findExistingUser = usersData.filter(user => user.name === this.name)
-                    if (findExistingUser.length) {
-                        this.errors.push('Користувач з таким логіном вже існує!')
-                        this.alreadyExistError = true
-                        this.loginError = true
-                    }
-                    else {
-                        usersData.push({name: this.name, password: this.password})
-                        localStorage.setItem('users',JSON.stringify(usersData))
+                let findExistingUser = usersData.filter(user => user.name === this.name)
+                if (findExistingUser.length) {
+                    if (findExistingUser[0].password === this.password) {
                         localStorage.setItem('currentLoggedUser', this.name)
                         this.$router.push({ name: 'Account' })
                     }
+                    else {
+                        this.errors.push('Неправильно вказаний пароль')
+                        this.pwdError = true
+                    }
                 }
-                console.log(usersData)
+                else {
+                    this.errors.push('Користувача з таким логіном не існує')
+                    this.loginError = true
+                }
+
+                
 
             }
         }
