@@ -6,7 +6,7 @@
                 <router-link v-if="!isLoggedIn" to="/login">Увійти</router-link>
                 <router-link v-if="!isLoggedIn" to="/registration">Реєстрація</router-link>
                 <router-link v-if="isLoggedIn" to="/account">Особистий кабінет</router-link>
-                <Logout v-if="isLoggedIn" />
+                <Logout @logout-user="$emit('logout-user')" :isLoggedIn="isLoggedIn" v-if="isLoggedIn" />
             </div>
         </div>
     </header>
