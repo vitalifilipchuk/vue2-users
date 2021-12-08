@@ -2,7 +2,7 @@
   <div class="container">
     <div class="registration">
       <h1>Registration Form</h1>
-      <RegistrationForm />
+      <RegistrationForm @register-user="emitUser" />
     </div>
   </div>
 </template>
@@ -14,6 +14,11 @@ export default {
   name: 'Registration',
   components: {
     RegistrationForm
+  },
+  methods: {
+    emitUser(user) {
+      this.$emit('register-user', user)
+    }
   }
 }
 </script>

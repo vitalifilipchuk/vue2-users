@@ -74,8 +74,7 @@ export default {
                 let findExistingUser = usersData.filter(user => user.name === this.name)
                 if (findExistingUser.length) {
                     if (findExistingUser[0].password === this.password) {
-                        localStorage.setItem('currentLoggedUser', this.name)
-                        this.$router.push({ name: 'Account' })
+                        this.$emit('login-user', this.name)
                     }
                     else {
                         this.errors.push('Неправильно вказаний пароль')

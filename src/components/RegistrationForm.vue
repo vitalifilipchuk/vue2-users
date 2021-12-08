@@ -24,10 +24,10 @@
         <div class="form__row">
             <input 
             type="password" 
-            v-model="repeatpwd" 
-            name="repeatpwd"
+            v-model="confirmPassword" 
+            name="confirmPassword"
             placeholder="Повторіть пароль"
-            :class="{error: repeatpwdError}"
+            :class="{error: confirmPasswordError}"
             />
         </div>
         <input type="submit" value="Реєстрація" class="btn btn--block">
@@ -47,19 +47,19 @@ export default {
         return {
             loginError: false,
             pwdError: false,
-            repeatpwdError: false,
+            confirmPasswordError: false,
             alreadyExistError: false,
             errors: [],
             name: '',
             password: '',
-            repeatpwd: ''
+            confirmPassword: ''
         }
     },
     methods: {
         submitHandler() {
             this.loginError = false
             this.pwdError = false
-            this.repeatpwdError = false
+            this.confirmPasswordError = false
             this.alreadyExistError = false
 
             if (!this.name) {
@@ -82,19 +82,16 @@ export default {
                 this.pwdError = true
             }
 
-            if (this.password !== this.repeatpwd) {
+            if (this.password !== this.confirmPassword) {
                 this.errors.push('Впевніться, що правильно ввели повторний пароль')
-                this.repeatpwdError = true
+                this.confirmPasswordError = true
             }
 
-            if (!(this.loginError || this.pwdError || this.repeatpwdError)) {
+            if (!(this.loginError || this.pwdError || this.confirmPasswordError)) {
                 let usersData = JSON.parse(localStorage.getItem("users"))
                 if (usersData === null) {
-                    let newUsersArray = new Array()
-                    newUsersArray.push({name: this.name, password: this.password})
-                    localStorage.setItem('users',JSON.stringify(newUsersArray))
-                    localStorage.setItem('currentLoggedUser', this.name)
-                    this.$router.push({ name: 'Account' })
+                    let newUser = {name: this.name, password: this.password}
+                    this.$emit('register-user', newUser)
                 }
                 else {
                     let findExistingUser = usersData.filter(user => user.name === this.name)
@@ -104,14 +101,10 @@ export default {
                         this.loginError = true
                     }
                     else {
-                        usersData.push({name: this.name, password: this.password})
-                        localStorage.setItem('users',JSON.stringify(usersData))
-                        localStorage.setItem('currentLoggedUser', this.name)
-                        this.$router.push({ name: 'Account' })
+                        let newUser = {name: this.name, password: this.password}
+                        this.$emit('register-user', newUser)
                     }
                 }
-                console.log(usersData)
-
             }
         }
     }

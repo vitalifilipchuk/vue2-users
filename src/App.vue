@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header :isLoggedIn="isLoggedIn" />
-    <router-view/>
+    <Header @logout-user="logoutUser" :isLoggedIn="isLoggedIn" />
+    <router-view @login-user="loginUser" @register-user="registerUser" :users="users" />
   </div>
 </template>
 
@@ -15,17 +15,35 @@ export default {
   },
   data() {
     return {
-      loggedIn: false
+      isLoggedIn: false,
+      users: []
     }
   },
-  computed: {
-    isLoggedIn: function() {
-      if (localStorage.getItem("currentLoggedUser")) {
-        return true
-      }
-      else {
-        return false
-      }
+  mounted() {
+    if (localStorage.currentLoggedUser) {
+      this.isLoggedIn = true
+    }
+    if (localStorage.users) {
+      this.users = JSON.parse(localStorage.getItem("users"))
+    }
+  },
+  methods: {
+    logoutUser() {
+      localStorage.removeItem('currentLoggedUser')
+      this.isLoggedIn = false
+      this.$router.push({ name: 'Home' })
+    },
+    loginUser(name) {
+      localStorage.setItem('currentLoggedUser', name)
+      this.isLoggedIn = true
+      this.$router.push({ name: 'Account' })
+    },
+    registerUser(user) {
+      this.users.push({name: user.name, password: user.password})
+      localStorage.setItem('users',JSON.stringify(this.users))
+      localStorage.setItem('currentLoggedUser', user.name)
+      this.isLoggedIn = true
+      this.$router.push({ name: 'Account' })
     }
   }
 }
