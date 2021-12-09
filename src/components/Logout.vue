@@ -1,10 +1,10 @@
 <template>
-    <div 
+    <button 
     @click="logout"
     class="logout-btn btn"
     >
     Вийти
-    </div>
+    </button>
 </template>
 
 <script>
