@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header @logout-user="logoutUser" :isLoggedIn="isLoggedIn" />
-    <router-view @login-user="loginUser" @register-user="registerUser" @logout-user="logoutUser" :users="users" />
+    <div class="page__content">
+      <router-view @login-user="loginUser" @register-user="registerUser" @logout-user="logoutUser" :users="users" />
+    </div>
   </div>
 </template>
 
@@ -57,6 +59,15 @@ export default {
   color: #2c3e50;
 }
 
+* {
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
 .container {
   max-width: 1000px;
   padding: 0 20px;
@@ -65,5 +76,9 @@ export default {
 
 input.error {
   border: 1px solid red;
+}
+
+.page__content {
+  padding: 50px 0;
 }
 </style>

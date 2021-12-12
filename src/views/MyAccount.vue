@@ -12,6 +12,9 @@
 
 export default {
   name: 'Account',
+  props: {
+    isLoggedIn: Boolean
+  },
   components: {
   }
 }

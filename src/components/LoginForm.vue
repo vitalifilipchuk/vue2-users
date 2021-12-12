@@ -21,7 +21,7 @@
             :class="{error: pwdError}"
             />
         </div>
-        <input type="submit" value="Увійти" class="btn btn--block">
+        <input type="submit" value="Увійти" class="btn btn--block login-btn">
 
         <div class="form__errors" v-if="errors.length">
             <ul>
