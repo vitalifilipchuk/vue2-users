@@ -24,6 +24,15 @@ const routes = [
     path: '/account',
     name: 'Account',
     component: () => import('../views/MyAccount.vue')
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/NotFound.vue')
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 
