@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+import auth from './middleware/auth'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,7 +25,10 @@ const routes = [
   {
     path: '/account',
     name: 'Account',
-    component: () => import('../views/MyAccount.vue')
+    component: () => import('../views/MyAccount.vue'),
+    meta: {
+      middleware: auth,
+    }
   },
   {
     path: '/404',
@@ -40,6 +45,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+      return next()
+  }
+  const middleware = to.meta.middleware
+  const context = {
+      next,
+      router
+  }
+  return middleware({
+      ...context
+  })
 })
 
 export default router
