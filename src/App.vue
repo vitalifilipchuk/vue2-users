@@ -74,10 +74,6 @@ h1, h2 {
   margin: 0 auto;
 }
 
-input.error {
-  border: 1px solid red;
-}
-
 .page__content {
   padding: 50px 0;
 }

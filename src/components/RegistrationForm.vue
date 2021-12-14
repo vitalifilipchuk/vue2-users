@@ -5,29 +5,29 @@
     >
         <div class="form__row">
             <input 
-            type="text" 
-            v-model="name" 
-            name="name"
-            placeholder="Логін"
-            :class="{error: loginError}"
+                type="text" 
+                v-model="name" 
+                name="name"
+                placeholder="Логін"
+                :class="{error: loginError}"
             />
         </div>
         <div class="form__row">
             <input 
-            type="password" 
-            v-model="password" 
-            name="password"
-            placeholder="Пароль"
-            :class="{error: pwdError}"
+                type="password" 
+                v-model="password" 
+                name="password"
+                placeholder="Пароль"
+                :class="{error: pwdError}"
             />
         </div>
         <div class="form__row">
             <input 
-            type="password" 
-            v-model="confirmPassword" 
-            name="confirmPassword"
-            placeholder="Повторіть пароль"
-            :class="{error: confirmPasswordError}"
+                type="password" 
+                v-model="confirmPassword" 
+                name="confirmPassword"
+                placeholder="Повторіть пароль"
+                :class="{error: confirmPasswordError}"
             />
         </div>
         <input type="submit" value="Реєстрація" class="btn btn--block">
@@ -41,8 +41,11 @@
 </template>
 
 <script>
+import validationMixin from './mixins/validationMixin';
+
 export default {
     name: 'RegistrationForm',
+   // mixins: ['validationMixin'],
     data() {
         return {
             loginError: false,
@@ -132,6 +135,14 @@ export default {
     height: 60px;
     border: 1px solid #c3c3c3;
     box-shadow: 0 2px 20px rgba(0,114,162,.07);
+}
+
+input.error {
+  border: 1px solid red;
+}
+
+.form__row input.error {
+  border: 1px solid red;
 }
 
 .form__errors {
