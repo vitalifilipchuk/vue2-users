@@ -1,8 +1,6 @@
 <template>
     <button
     class="btn"
-    :class="btnClass"
-    @click="onClick()"
     >
     {{text}}
     </button>
@@ -12,13 +10,10 @@
 export default {
     name: 'Button',
     props: {
-        text: String,
-        btnClass: String
-    },
-    methods: {
-        onClick() {
-            this.$emit('btn-click')
-        }
+        text: {
+            type: String,
+            default: ''
+        } 
     }
 }
 </script>

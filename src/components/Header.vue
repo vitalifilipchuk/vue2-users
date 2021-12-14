@@ -6,7 +6,18 @@
                 <router-link v-if="!isLoggedIn" to="/login">Увійти</router-link>
                 <router-link v-if="!isLoggedIn" to="/registration">Реєстрація</router-link>
                 <router-link v-if="isLoggedIn" to="/account">Особистий кабінет</router-link>
-                <Button @btn-click="$emit('logout-user')" :btnClass="'logout-btn'" :text="'Вийти'" :isLoggedIn="isLoggedIn" v-if="isLoggedIn" />
+                <Button 
+                    class="logout-btn" 
+                    :text="'Вийти'" 
+                    :isLoggedIn="isLoggedIn"
+                    v-if="isLoggedIn" 
+                    @click.native="$emit('logout-user')"   
+                />
+                <Button 
+                    class="back-btn" 
+                    :text="'Назад'" 
+                    @click.native="goBack"   
+                />
             </div>
         </div>
     </header>
@@ -17,9 +28,19 @@ import Button from '../components/Button'
 
 export default {
     name: 'Header',
-    props: ['isLoggedIn'],
     components: {
         Button
+    },
+    props: {
+        isLoggedIn: {
+            type: Boolean,
+            default: false
+        }
+    },
+    methods: {
+        goBack() {
+            this.$router.back()
+        }
     }
 }
 </script>

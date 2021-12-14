@@ -1,7 +1,7 @@
 <template>
     <form 
-    @submit.prevent="submitHandler" 
-    class="form login-form"
+        class="form login-form"
+        @submit.prevent="submitHandler" 
     >
         <div class="form__row">
             <input 
@@ -9,7 +9,7 @@
             v-model="name" 
             name="name"
             placeholder="Логін"
-            :class="{error: loginError}"
+            :class="{error: loginError || (errors.name && errors.name.length)}"
             />
         </div>
         <div class="form__row">
@@ -18,58 +18,48 @@
             v-model="password" 
             name="password"
             placeholder="Пароль"
-            :class="{error: pwdError}"
+            :class="{error: pwdError || (errors.password && errors.password.length)}"
             />
         </div>
         <input type="submit" value="Увійти" class="btn btn--block login-btn">
 
-        <div class="form__errors" v-if="errors.length">
+        <div 
+            class="form__errors" 
+            v-if="!errors.formIsValid"
+        >
             <ul>
-                <li v-for="error in errors">{{ error }}</li>
+                <li v-for="error in errors.name">{{ error }}</li>
+                <li v-for="error in errors.password">{{ error }}</li>
             </ul>
         </div>
     </form>
 </template>
 
 <script>
+import validationMixin from './mixins/validationMixin'
+
 export default {
     name: 'LoginForm',
+    mixins: [validationMixin],
     data() {
         return {
-            loginError: false,
-            pwdError: false,
-            errors: [],
+            errors: {},
             name: '',
             password: '',
-            repeatpwd: ''
+            pwdError: false,
+            loginError: false
         }
     },
     methods: {
         submitHandler() {
-            this.loginError = false
             this.pwdError = false
+            this.loginError = false
 
-            if (!this.name) {
-                this.errors.push('Потрібно вказати логін!')
-                this.loginError = true
-            }
+            this.errors = this.validateForm({name: this.name, password: this.password})
 
-            if (this.name.length < 3) {
-                this.errors.push('Логін повинен бути довжиною 3 символи або більше')
-                this.loginError = true
-            }
+            console.log(this.errors)
 
-            if(!this.password) {
-                this.errors.push('Потрібно вказати пароль!')
-                this.pwdError = true
-            }
-
-            if(this.password.length < 5) {
-                this.errors.push('Пароль повинен бути довжиною 5 символів або більше')
-                this.pwdError = true
-            }
-
-            if (!(this.loginError || this.pwdError)) {
+            if (this.errors.formIsValid) {
                 let usersData = JSON.parse(localStorage.getItem("users"))
                 let findExistingUser = usersData.filter(user => user.name === this.name)
                 if (findExistingUser.length) {
