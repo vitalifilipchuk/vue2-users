@@ -11,7 +11,7 @@
                     :text="'Вийти'" 
                     :isLoggedIn="isLoggedIn"
                     v-if="isLoggedIn" 
-                    @click.native="$emit('logout-user')"   
+                    @click.native="$emit('logoutUser')"   
                 />
                 <Button 
                     class="back-btn" 

@@ -9,7 +9,7 @@
       <div v-if="users.length === 0">
         <p>Не створено жодного користувача.</p>
         <div>
-          <Button @btn-click="showPopup" :btnClass="'login-btn'" :text="'Зареєструватися'" />
+          <Button @click.native="showPopup" :btnClass="'login-btn'" :text="'Зареєструватися'" />
         </div>
         <RegisterPopup @close-popup="closePopup" @register-user="emitUser" :popupActive="popupActive" />
       </div>

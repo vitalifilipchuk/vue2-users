@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header @logout-user="logoutUser" :isLoggedIn="isLoggedIn" />
+    <Header @logoutUser="logoutUser" :isLoggedIn="isLoggedIn" />
     <div class="page__content">
-      <router-view @login-user="loginUser" @register-user="registerUser" @logout-user="logoutUser" :users="users" />
+      <router-view @login-user="loginUser" :isLoggedIn="isLoggedIn" @register-user="registerUser" @logoutUser="logoutUser" :users="users" />
     </div>
   </div>
 </template>
