@@ -5,20 +5,20 @@
     >
         <div class="form__row">
             <input 
-            type="text" 
-            v-model="name" 
-            name="name"
-            placeholder="Логін"
-            :class="{error: loginError || (errors.name && errors.name.length)}"
+                :class="{error: (errors.name && errors.name.length)}"
+                type="text" 
+                v-model="name" 
+                name="name"
+                placeholder="Логін"
             />
         </div>
         <div class="form__row">
             <input 
-            type="password" 
-            v-model="password" 
-            name="password"
-            placeholder="Пароль"
-            :class="{error: pwdError || (errors.password && errors.password.length)}"
+                :class="{error: (errors.password && errors.password.length)}"
+                type="password" 
+                v-model="password" 
+                name="password"
+                placeholder="Пароль"
             />
         </div>
         <input type="submit" value="Увійти" class="btn btn--block login-btn">
@@ -45,37 +45,21 @@ export default {
         return {
             errors: {},
             name: '',
-            password: '',
-            pwdError: false,
-            loginError: false
+            password: ''
         }
     },
     methods: {
         submitHandler() {
-            this.pwdError = false
-            this.loginError = false
-
             this.errors = this.validateForm({name: this.name, password: this.password})
 
             if (this.errors.formIsValid) {
-                let usersData = JSON.parse(localStorage.getItem("users"))
-                let findExistingUser = usersData.filter(user => user.name === this.name)
-                if (findExistingUser.length) {
-                    if (findExistingUser[0].password === this.password) {
+                this.errors = this.checkUserNotExists('name', this.name)
+                if (this.errors.formIsValid) {
+                    this.errors = this.checkUserPassword('password', {name: this.name, password: this.password})
+                    if (this.errors.formIsValid) {
                         this.$emit('loginUser', this.name)
                     }
-                    else {
-                        this.errors.push('Неправильно вказаний пароль')
-                        this.pwdError = true
-                    }
                 }
-                else {
-                    this.errors.push('Користувача з таким логіном не існує')
-                    this.loginError = true
-                }
-
-                
-
             }
         }
     }
