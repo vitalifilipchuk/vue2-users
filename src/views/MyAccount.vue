@@ -22,7 +22,10 @@ export default {
     Button
   },
   props: {
-    isLoggedIn: Boolean
+    isLoggedIn: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>

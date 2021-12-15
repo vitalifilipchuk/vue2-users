@@ -2,7 +2,9 @@
   <div class="container">
     <div class="registration">
       <h1>Registration Form</h1>
-      <RegistrationForm @register-user="emitUser" />
+      <RegistrationForm 
+        @registerUser="user => this.$emit('registerUser', user)" 
+      />
     </div>
   </div>
 </template>
@@ -14,11 +16,6 @@ export default {
   name: 'Registration',
   components: {
     RegistrationForm
-  },
-  methods: {
-    emitUser(user) {
-      this.$emit('register-user', user)
-    }
   }
 }
 </script>

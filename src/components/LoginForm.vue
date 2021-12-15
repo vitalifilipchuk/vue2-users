@@ -57,14 +57,12 @@ export default {
 
             this.errors = this.validateForm({name: this.name, password: this.password})
 
-            console.log(this.errors)
-
             if (this.errors.formIsValid) {
                 let usersData = JSON.parse(localStorage.getItem("users"))
                 let findExistingUser = usersData.filter(user => user.name === this.name)
                 if (findExistingUser.length) {
                     if (findExistingUser[0].password === this.password) {
-                        this.$emit('login-user', this.name)
+                        this.$emit('loginUser', this.name)
                     }
                     else {
                         this.errors.push('Неправильно вказаний пароль')

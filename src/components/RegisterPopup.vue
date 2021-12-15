@@ -1,11 +1,22 @@
 <template>
-    <div @click.self="$emit('close-popup')" class="popup" :class="{ open: popupActive}">
+    <div 
+        class="popup" 
+        :class="{ open: popupActive}" 
+        @click.self="$emit('closePopup')"
+    >
         <div class="popup__body">
             <div class="popup__inner">
-                <div class="popup__close" @click="$emit('close-popup')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none"><rect y="11.678" width="16" height="2" rx="1" transform="rotate(-45 0 11.678)" fill="#00A1E4"></rect><rect x="1.414" width="16" height="2" rx="1" transform="rotate(45 1.414 0)" fill="#00A1E4"></rect></svg></div>
+                <div 
+                    class="popup__close" 
+                    @click="$emit('closePopup')"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none"><rect y="11.678" width="16" height="2" rx="1" transform="rotate(-45 0 11.678)" fill="#00A1E4"></rect><rect x="1.414" width="16" height="2" rx="1" transform="rotate(45 1.414 0)" fill="#00A1E4"></rect></svg>
+                </div>
                 <div class="popup__content">
                     <h2>Register User</h2>
-                    <RegistrationForm @register-user="emitUser" />
+                    <RegistrationForm 
+                        @registerUser="user => this.$emit('registerUser', user)" 
+                    />
                 </div>
             </div>
         </div>
@@ -17,15 +28,13 @@ import RegistrationForm from '../components/RegistrationForm'
 
 export default {
     name: 'RegisterPopup',
-    props: {
-        popupActive: Boolean
-    },
     components: {
         RegistrationForm
     },
-    methods: {
-        emitUser(user) {
-        this.$emit('register-user', user)
+    props: {
+        popupActive: {
+            typpe: Boolean,
+            default: false
         }
     }
 }

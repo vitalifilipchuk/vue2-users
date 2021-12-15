@@ -1,7 +1,7 @@
 <template>
     <form 
-    @submit.prevent="submitHandler" 
-    class="form registration-form"
+        @submit.prevent="submitHandler" 
+        class="form registration-form"
     >
         <div class="form__row">
             <input 
@@ -94,7 +94,7 @@ export default {
                 let usersData = JSON.parse(localStorage.getItem("users"))
                 if (usersData === null) {
                     let newUser = {name: this.name, password: this.password}
-                    this.$emit('register-user', newUser)
+                    this.$emit('registerUser', newUser)
                 }
                 else {
                     let findExistingUser = usersData.filter(user => user.name === this.name)
@@ -105,7 +105,7 @@ export default {
                     }
                     else {
                         let newUser = {name: this.name, password: this.password}
-                        this.$emit('register-user', newUser)
+                        this.$emit('registerUser', newUser)
                     }
                 }
             }
