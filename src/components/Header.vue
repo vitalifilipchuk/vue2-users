@@ -54,12 +54,8 @@ export default {
         align-items: center;
     }
 
-    .header__inner > :first-child {
-        margin-right: auto;
-    }
-
-    .header__inner > :last-child {
-        margin-right: 0;
+    .header__inner .btn {
+        margin-right: 15px;
     }
 
     .header__inner a {
@@ -69,6 +65,14 @@ export default {
         font-size: 18px;
         font-weight: 600;
         transition: 0.4s;
+    }
+
+    .header__inner > :first-child {
+        margin-right: auto;
+    }
+
+    .header__inner > :last-child {
+        margin-right: 0;
     }
 
     .header__inner a:hover {
