@@ -1,7 +1,9 @@
 <template>
   <div class="login">
     <h1>This is a login page</h1>
-    <LoginForm @login-user="emitName" />
+    <LoginForm 
+      @loginUser="name => this.$emit('loginUser', name)" 
+    />
   </div>
 </template>
 
@@ -12,11 +14,6 @@ export default {
   name: 'Login',
   components: {
     LoginForm
-  },
-  methods: {
-    emitName(name) {
-      this.$emit('login-user', name)
-    }
   }
 }
 </script>

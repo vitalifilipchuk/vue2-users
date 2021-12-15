@@ -1,17 +1,32 @@
 <template>
   <div class="home">
     <div class="container">
-      <div class="dashboard" v-if="users.length > 0">
-        <div class="dashboard__item" :key="user.name" v-for="user in users">
+      <div 
+        class="dashboard" 
+        v-if="users.length > 0"
+      >
+        <div 
+          class="dashboard__item" 
+          :key="user.name" 
+          v-for="user in users"
+        >
           {{ user.name }}
         </div>
       </div>
       <div v-if="users.length === 0">
         <p>Не створено жодного користувача.</p>
         <div>
-          <Button @click.native="showPopup" :btnClass="'login-btn'" :text="'Зареєструватися'" />
+          <Button 
+            class="login-btn" 
+            :text="'Зареєструватися'" 
+            @click.native="showPopup"  
+          />
         </div>
-        <RegisterPopup @close-popup="closePopup" @register-user="emitUser" :popupActive="popupActive" />
+        <RegisterPopup 
+          :popupActive="popupActive" 
+          @closePopup="closePopup" 
+          @registerUser="user => this.$emit('registerUser', user)" 
+        />
       </div>
     </div>
     
@@ -25,17 +40,20 @@ import RegisterPopup from '../components/RegisterPopup'
 
 export default {
   name: 'Home',
+  components: {
+    Button,
+    RegisterPopup
+  },
+  props: {
+    users: {
+      type: Array,
+      default: []
+    }
+  },
   data() {
     return {
       popupActive: false
     }
-  },
-  props: {
-    users: Array
-  },
-  components: {
-    Button,
-    RegisterPopup
   },
   methods: {
     showPopup() {
@@ -43,9 +61,6 @@ export default {
     },
     closePopup() {
       this.popupActive = false
-    },
-    emitUser(user) {
-      this.$emit('register-user', user)
     }
   }
 }
