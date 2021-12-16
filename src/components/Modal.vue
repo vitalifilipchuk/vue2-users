@@ -6,18 +6,7 @@
     >
         <div class="popup__body">
             <div class="popup__inner">
-                <div 
-                    class="popup__close" 
-                    @click="$emit('closePopup')"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none"><rect y="11.678" width="16" height="2" rx="1" transform="rotate(-45 0 11.678)" fill="#00A1E4"></rect><rect x="1.414" width="16" height="2" rx="1" transform="rotate(45 1.414 0)" fill="#00A1E4"></rect></svg>
-                </div>
-                <div class="popup__content">
-                    <h2>Register User</h2>
-                    <RegistrationForm 
-                        @registerUser="user => this.$emit('registerUser', user)" 
-                    />
-                </div>
+                <slot></slot>
             </div>
         </div>
     </div>
@@ -33,7 +22,7 @@ export default {
     },
     props: {
         popupActive: {
-            typpe: Boolean,
+            type: Boolean,
             default: false
         }
     }
